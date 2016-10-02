@@ -1,0 +1,68 @@
+<div ng-show="showarticulos">
+    <button type="button" class="btn btn-primary pull-right" ng-click="ultimoID()">
+        <i class="fa fa-plus"></i> Nuevo Articulo
+    </button>
+    <h5 class="text-primary subtitulo">Articulos Registrados</h5>
+    <div class="tabla-responsiva">
+        <table class="table table-striped">
+            <div class="buscar">
+            <input ng-model="buscar" type="text" class="form-control" id="buscar" placeholder="Buscar" required>
+             </div>
+            <thead>
+            <tr class="table-color">
+                <th>Clave Articulo</th>
+                <th>Descripción</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in articulos | filter:buscar">
+                <td>{{item.id_articulo}}</td>
+                <td>{{item.descripcion}}</td>
+                <td><i class="fa fa-pencil-square-o cursorpointer" ng-click="editar(item.index)"></i></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div ng-hide="showarticulos">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Registro de Articulos</div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="articulosForm" id="articulosForm" novalidate>
+                <span class="text-success pull-right">Clave: {{articulo.id_articulo}}</span>
+
+                <div class="form-group">
+                <label class="control-label col-sm-2 text-success" for="descripcion">Descripción:</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" ng-model="articulo.descripcion" type="text" class="form-control" id="descripcion" required>
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-sm-2 text-success" for="modelo">Modelo:</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" ng-model="articulo.modelo" type="text" class="form-control" id="modelo">
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-sm-2 text-success" for="precio">Precio:</label>
+                <div class="col-sm-1">
+                    <input autocomplete="off" solo-flotantes ng-model="articulo.precio" type="text" class="form-control" id="precio" required>
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-sm-2 text-success" for="existencia">Existencia:</label>
+                <div class="col-sm-1">
+                    <input autocomplete="off" solo-numeros ng-model="articulo.existencia" type="text" class="form-control" id="existencia" required>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="pull-right">
+        <button class="btn btn-success" ng-click="showYesNo()">Cancelar</button>
+        <button class="btn btn-success" ng-click="guardar()">Guardar</button>
+    </div>
+</div>

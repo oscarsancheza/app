@@ -1,0 +1,31 @@
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Configuración General</div>
+    <div class="panel-body">
+        <form class="form-horizontal" name="configForm" id="configForm" novalidate>
+            <div class="form-group">
+            <label class="control-label col-sm-2 text-success" for="tasa">Tasa Financiamiento:</label>
+            <div class="col-sm-1">
+                <input autocomplete="off" solo-flotantes ng-model="config.tasa" type="text" class="form-control" id="tasa" required>
+            </div>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-sm-2 text-success" for="enganche">% Enganche:</label>
+            <div class="col-sm-1">
+                <input autocomplete="off" solo-flotantes ng-model="config.porcentaje_enganche" type="text" class="form-control" id="enganche" required>
+            </div>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-sm-2 text-success" for="plazo">Plazo Máximo:</label>
+            <div class="col-sm-1">
+                <input autocomplete="off" solo-numeros ng-model="config.plazo" type="text" class="form-control" id="plazo" required>
+            </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="pull-right">
+    <button class="btn btn-success" ng-click="cancelar()">Cancelar</button>
+    <button class="btn btn-success" ng-click="guardar()">Guardar</button>
+</div>

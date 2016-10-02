@@ -1,0 +1,68 @@
+<div ng-show="showclientes">
+    <button type="button" class="btn btn-primary pull-right" ng-click="ultimoID()">
+        <i class="fa fa-plus"></i> Nuevo Cliente
+    </button>
+    <h5 class="text-primary subtitulo">Clientes Registrados</h5>
+    <div class="tabla-responsiva">
+        <table class="table table-striped">
+            <div class="buscar">
+            <input ng-model="buscar" type="text" class="form-control" id="buscar" placeholder="Buscar" required>
+             </div>
+            <thead>
+            <tr class="table-color">
+                <th>Clave Cliente</th>
+                <th>Nombre</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in clientes | filter:buscar">
+                <td>{{item.id_cliente}}</td>
+                <td>{{item.nombre + ' ' +item.apepaterno + ' ' + ((item.apematerno)?item.apematerno:'')}}</td>
+                <td><i class="fa fa-pencil-square-o cursorpointer" ng-click="editar(item.index)"></i></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div ng-hide="showclientes">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Registro de Clientes</div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="clientesForm" id="articulosForm" novalidate>
+                <span class="text-success pull-right">Clave: {{cliente.id_cliente}}</span>
+
+                <div class="form-group">
+                <label class="control-label col-sm-2 text-success" for="nombre">Nombre:</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" ng-model="cliente.nombre" type="text" class="form-control" id="nombre" required>
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-sm-2 text-success" for="apepaterno">Apellido Paterno:</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" ng-model="cliente.apepaterno" type="text" class="form-control" id="apepaterno" required>
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-sm-2 text-success" for="apematerno">Apellido Materno:</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" ng-model="cliente.apematerno" type="text" class="form-control" id="apematerno">
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-sm-2 text-success" for="rfc">RFC:</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" ng-model="cliente.rfc" type="text" class="form-control" id="rfc" required>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="pull-right">
+        <button class="btn btn-success" ng-click="showYesNo()">Cancelar</button>
+        <button class="btn btn-success" ng-click="guardar()">Guardar</button>
+    </div>
+</div>

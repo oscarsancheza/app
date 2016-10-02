@@ -1,0 +1,104 @@
+.navbar {
+    border-radius: 0px; 
+}
+
+.tabla-responsiva{
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+.tabla-responsiva-ventas{
+    width: 100%;
+    margin-top: 10px;
+    height: 200px;
+    overflow: auto;
+    border-top: 2px solid #666667;
+}
+
+.formtotal{
+    border-top: 2px solid #666667;
+}
+
+tr.color-tabla-venta td{
+    color: blue;
+}
+
+.total-padding{
+    padding-left:130px;
+}
+
+.lbl-total{
+     color: blue;
+     padding-top:10px;    
+}
+
+tr.table-color{
+    background-color: rgb(188, 199, 255);
+    color: #273ebb;
+}
+
+tr.table-ventas{
+    background-color: #fff;
+    color: #666667;
+}
+
+.cursorpointer:hover{
+    cursor: pointer;
+}
+
+.buscar{
+    display: block;
+    margin: 5px 0px;
+}
+
+.subtitulo{
+    padding-top: 10px;
+}
+
+.span-lbl{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.hr-primary{
+     border-top: 2px solid#6fbcff;
+}
+
+.span-rfc{
+    display: inline-block;
+    margin-top: 7px;
+    color: #666667;
+}
+
+.input-cantidad {
+        width: 70px;
+}
+
+.i-venta{
+    font-size: 20px;
+    color:red;
+}
+
+.i-venta:hover{
+    cursor: pointer;
+}
+
+
+.label-gray{
+    background-color:#c5c5c5;
+    color:#333;
+    font-weight: bold;
+}
+
+.margin-enganche{
+    margin-top:10px;
+}
+
+.table-color-venta{
+    text-align: center;
+    background-color: rgb(188, 199, 255);
+    color: #273ebb;
+    margin-top: 20px;
+    padding: 10px;
+}

@@ -1,0 +1,151 @@
+<div ng-show="showventas">
+    <button type="button" class="btn btn-primary pull-right" ng-click="ultimoID()">
+        <i class="fa fa-plus"></i> Nueva Venta
+    </button>
+    <h5 class="text-primary subtitulo">Ventas Activas</h5>
+    <div class="tabla-responsiva">
+        <table class="table table-striped">
+            <div class="buscar">
+            <input ng-model="buscar" type="text" class="form-control" id="buscar" placeholder="Buscar Venta..." required>
+             </div>
+            <thead>
+            <tr class="table-color">
+                <th>Folio Venta</th>
+                <th>Clave Cliente</th>
+                <th>Nombre</th>
+                <th>Total</th>
+                <th>Fecha</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in ventas | filter:buscar">
+                <td>{{item.folio}}</td>
+                <td>{{item.id_cliente}}</td>
+                <td>{{item.nombre + ' ' +item.apepaterno + ' ' + ((item.apematerno)?item.apematerno:'')}}</td>
+                <td>$ {{item.total | number:2}}</td>
+                <td>{{item.fecha}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div ng-hide="showventas">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Registro de Ventas</div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="ventasForm" id="ventasForm" novalidate>
+                <span class="text-success pull-right">Folio Venta: {{venta.folio}}</span>
+
+                <div class="form-group">
+                <label class="control-label col-sm-2" for="cliente"><span class="label label-primary span-lbl">Cliente:</span></label>
+                <div class="col-sm-4">
+                    <ui-select ng-disabled="btnventa" ng-model="venta.clienteselected">
+                        <ui-select-match placeholder="Buscar Cliente...">
+                            <span ng-bind="$select.selected.id_cliente + ' - ' + $select.selected.nombre +' '+ $select.selected.apepaterno + ' ' + (($select.selected.apematerno)?$select.selected.apematerno:'')"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in (clientes | filter: $select.search) track by item.id_cliente">
+                            <span ng-bind="item.id_cliente + ' - ' + item.nombre +' '+ item.apepaterno + ' ' + ((item.apematerno)?item.apematerno:'')"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-3">
+                    <span class="span-rfc">RFC: {{venta.clienteselected.rfc}}</span>
+                </div>
+                </div>
+                <hr class="hr-primary">
+                <div class="form-group">
+                <label class="control-label col-sm-2" for="articulo"><span class="label label-primary span-lbl">Articulo:</span></label>
+                <div class="col-sm-4">
+                    <ui-select ng-disabled="btnventa" ng-model="venta.articuloselected" focus-on='SetFocus'>
+                        <ui-select-match placeholder="Buscar Articulo...">
+                            <span ng-bind="$select.selected.descripcion"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in (articulos | filter: $select.search) track by item.id_articulo">
+                            <span ng-bind="item.descripcion"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-1">
+                <button ng-disabled="btnventa" class="btn btn-default" ng-click="agregarArticulo(venta.articuloselected)"><i class="fa fa-plus"></i></button>
+                </div>
+                </div>
+            </form>
+
+            <div class="tabla-responsiva-ventas">
+                <table class="table table-striped">
+                    <thead>
+                    <tr class="table-ventas">
+                        <th>Descripción Articulo</th>
+                        <th>Modelo</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Importe</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    
+                    <tr ng-repeat="item in articuloVenta | filter:buscar" class="color-tabla-venta">
+                        <td>{{item.descripcion}}</td>
+                        <td>{{item.modelo}}</td>
+                        <td>
+                            <input ng-disabled="btnventa" solo-numeros ng-change="sacarImporte(item)" type="text" id="cantidad{{item.index}}" class="form-control input-cantidad" ng-model="venta.cantidad[item.index]">
+                        </td>
+                        <td>$ {{item.preciofinal  | number:2}}</td>
+                        <td>$ {{(item.importe)?(item.importe | number:2):0;}}</td>
+                        <td><i ng-if="!btnventa" class="fa fa-times i-venta" ng-click="eliminarArticulo(item)"></i></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div> <!-- termina tabla -->
+
+            <form class="form-horizontal formtotal" name="totalForm" id="totalForm" novalidate>
+                <div class="margin-enganche">
+                <label class="control-label col-sm-10" for="descripcion"><span class="label label-gray span-lbl">Enganche:</span></label>
+                <div class="">
+                <label class="lbl-total col-sm-2">$ {{venta.enganche | number:2}}</label>      
+                </div>
+                </div>
+
+                <div class="">
+                <label class="control-label col-sm-10" for="descripcion"><span class="label label-gray span-lbl">Bonificacion Enganche:</span></label>
+                <div class="">
+                <label class="lbl-total col-sm-2">$ {{venta.bonificacion | number:2}}</label>    
+                </div>
+                </div>
+
+                <div class="">
+                <label class="control-label col-sm-10" for="descripcion"><span class="label label-gray span-lbl total-padding">Total:</span></label>
+                <div class="">
+                <label class="lbl-total col-sm-2">$ {{venta.total | number:2}}</label>      
+                </div>
+                </div>
+            </form>
+
+            <div class="tabla-responsiva" ng-show="btnventa">
+                <div class="col-sm-12 table-color-venta">ABONOS MENSUALES</div>
+                <table class="table table-striped">
+                    <tbody>
+                    <tr ng-repeat="item in abonos">
+                        <td>{{item.abono}} ABONOS DE</td>
+                        <td>$ {{venta.abono[item.index] | number:2}}</td>
+                        <td>TOTAL A PAGAR $ {{venta.totalapagar[item.index] | number:2}}</td>
+                        <td>SE AHORRA $ {{venta.ahorro[item.index] | number:2}}</td>
+                        <td>
+                            <input type="radio" name="optradio" ng-model="venta.abonosmensuales" ng-value="item.index+1">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="pull-right">
+        <button class="btn btn-success" ng-click="showYesNo()">Cancelar</button>
+        <button class="btn btn-success" ng-click="siguiente()" ng-hide="btnventa" >siguiente</button>
+        <button class="btn btn-success" ng-click="guardar()" ng-show="btnventa">Guardar</button>
+    </div>
+</div>
